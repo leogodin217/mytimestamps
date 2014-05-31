@@ -35,14 +35,8 @@ describe "Information pages" do
             expect(page).to have_selector("li#activity#{activity.id}", 
                                           text: activity.name) 
           end
-          
-        end
-
-        it "should print the page" do
-          puts page.body
         end
       end
-
     end
   end
 end
