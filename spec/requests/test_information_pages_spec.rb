@@ -21,16 +21,26 @@ describe "Information pages" do
       end
 
       describe "With activites" do 
-        let!(:activity1) { Activity.create(name: "foobar1") }
-        let!(:activity2) { Activity.create(name: "foobar2") }
-        let!(:activity3) { Activity.create(name: "foobar3") }
+
         before do 
+          3.times do
+            FactoryGirl.create(:activity)
+          end
           visit root_path
         end
+        it "should list each activity" do
+          activities = Activity.all
 
-        it { should have_selector("li#activity#{activity1.id}", text: activity1.name) }
-        it { should have_selector("li#activity#{activity2.id}", text: activity2.name) }
-        it { should have_selector("li#activity#{activity3.id}", text: activity3.name) }
+          activities.each do |activity|
+            expect(page).to have_selector("li#activity#{activity.id}", 
+                                          text: activity.name) 
+          end
+          
+        end
+
+        it "should print the page" do
+          puts page.body
+        end
       end
 
     end
