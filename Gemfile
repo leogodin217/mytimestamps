@@ -23,15 +23,21 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 
-group :development, :test do 
-  gem 'sqlite3'
+group :development do 
+  gem 'pg'
 end
 
 group :test do 
+  gem 'sqlite3'
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
   gem 'guard-rspec'
   gem 'capybara'
+end
+
+group :production do 
+  gem 'rails_12factor'
+  gem 'pg'
 end
 
 # Use ActiveModel has_secure_password
@@ -46,3 +52,5 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+# For heroku 
+ruby '2.1.2'
