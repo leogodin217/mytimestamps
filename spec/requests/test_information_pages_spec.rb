@@ -9,34 +9,31 @@ describe "Information pages" do
     it { should have_content('My Timestamps') }
     it { should have_title('My Timestamps') }
 
-    describe "home page activites" do
+    describe "when not signed in" do
+      before { visit root_path }
 
-      describe "without activities" do
-        before { visit root_path }
-
-        it "should be at the home path with no redirects" do
-          # This tests that there weren't any errors
-          expect(current_path).to eq root_path
-        end
-      end
-
-      describe "With activites" do 
-
-        before do 
-          3.times do
-            FactoryGirl.create(:activity)
-          end
-          visit root_path
-        end
-        it "should list each activity" do
-          activities = Activity.all
-
-          activities.each do |activity|
-            expect(page).to have_selector("li#activity#{activity.id}", 
-                                          text: activity.name) 
-          end
-        end
-      end
+      it { should have_link('Sign in', href: new_user_session_path) }
+      it { should have_link('Sign up', href: new_user_registration_path) }
     end
+
+    describe "when signed in" do 
+      let!(:user) { FactoryGirl.create(:user) }
+
+      before do
+        visit new_user_session_path
+        fill_in "Email", with: user.email
+        fill_in "Password", with: user.password
+        click_button "Sign in"
+      end
+
+      it "should print the page" do
+        print page.body
+      end
+
+      it { should_not have_link('Sign in', href: new_user_session_path) }
+      it { should_not have_link('Sign up', href: new_user_registration_path) }
+      it { should have_link('Sign out', href: destroy_user_session_path) }
+    end
+   
   end
 end

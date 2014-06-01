@@ -7,8 +7,30 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <header>
+  <% if user_signed_in? %>
+    <h4>User is signed in</h4>
+    <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+  <% else %>
+    <h4>User is not signed in</h4>
+    <%= link_to "Sign in", new_user_session_path %>
+  <% end %>
+  </header>
+  <% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
 
+  <h1>My Timestamps</h1>
+<div>
+  <% if !user_signed_in? %>
+    <%= link_to "Sign up", new_user_registration_path %>
+  <% end %>
+</div>
 <%= yield %>
 
+<%= debug(params) if Rails.env.development? %>
 </body>
 </html>

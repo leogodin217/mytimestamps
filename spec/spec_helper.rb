@@ -23,6 +23,7 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
@@ -44,4 +45,7 @@ RSpec.configure do |config|
 
   # Use Capybara 
   config.include Capybara::DSL
+  # User Warden for mocking devise logins
+  config.include Warden::Test::Helpers
+  Warden.test_mode!
 end
