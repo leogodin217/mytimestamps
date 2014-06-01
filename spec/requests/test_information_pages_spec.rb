@@ -26,10 +26,6 @@ describe "Information pages" do
         click_button "Sign in"
       end
 
-      it "should print the page" do
-        print page.body
-      end
-
       it { should_not have_link('Sign in', href: new_user_session_path) }
       it { should_not have_link('Sign up', href: new_user_registration_path) }
       it { should have_link('Sign out', href: destroy_user_session_path) }
