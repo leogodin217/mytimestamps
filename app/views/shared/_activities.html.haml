@@ -1,0 +1,9 @@
+
+%h3 Activities
+%ul.activities-list
+  - if @activities.any?
+    - @activities.each do |activity|
+      %li{id: "activity#{activity.id}"}
+        = activity.name
+  - else
+    No activities

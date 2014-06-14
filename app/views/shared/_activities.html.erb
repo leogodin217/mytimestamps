@@ -1,8 +1,0 @@
-<h3>Activities</h3>
-<ul class="activities">
-<% if @activities.any? %>
-  <% @activities.each do |activity| %>
-    <li id="activity<%= activity.id %>"> <%= activity.name %></li>  
-  <% end %>
-<% end %>
-</ul>
