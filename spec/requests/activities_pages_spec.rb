@@ -28,7 +28,7 @@ describe "Activities page" do
       it { should have_content("No activities")}
     end
 
-    describe "with activities" do 
+    describe "listing activities" do 
       before do 
         3.times do 
           FactoryGirl.create(:activity, user: user)
@@ -42,9 +42,19 @@ describe "Activities page" do
           expect(page).to have_selector("li", text: activity.name)
         end
       end
-      
+
+      it "should link to show activity" do
+        activities = user.activities.to_a
+        activities.each do |activity|
+          expect(page).to have_selector("li", text: activity.name)
+          expect(page).to have_selector("a[href='#{activity_path(activity.id)}']",
+                                           text: activity.name)
+        end
+
+      end
+
     end
 
-
   end
+
 end
