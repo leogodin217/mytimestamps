@@ -1,0 +1,13 @@
+
+<%= link_to "New activity", new_activity_path %>
+
+<% if @activities.count > 0 %>
+  <%= @activities.inspect %>
+  <ul id="activities-list">
+  <% @activities.each do |activity| %>
+      <li id="activity<%= activity.id %>"><%= activity.name %>
+  <% end %>
+  </ul>
+<% else %>
+  No activities
+<% end %>
