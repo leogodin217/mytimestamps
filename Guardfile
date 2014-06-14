@@ -17,9 +17,12 @@ guard :rspec do
   # Capybara features specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/features/#{m[1]}_spec.rb" }
   # Rspec request specs
+  # run _request_spec.rb for any view change
   watch(%r{^app/views/(.+)/.*\.(erb|haml|slim)$})     { |m| "spec/requests/#{m[1]}_pages_spec.rb" }
-  # On application layout change run all request specs
+  # run all request specs on application layout change
   watch(%r{^app/views/layouts/.*\.(erb|haml|slim)$})     { |m| "spec/requests" }
+  # run all request specs on shared partial change
+  watch(%r{^app/views/shared/.*\.(erb|haml|slim)$})   {|m| "spec/requests"}
 
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})
