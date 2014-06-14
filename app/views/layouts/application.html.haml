@@ -2,54 +2,55 @@
 !!!
 %html
   %head
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
     %title My Timestamps
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbo-links-track' => true
     = csrf_meta_tags
 
   %body
-    %header
-      .navbar.navbar-inverse.navbar-fixed-top{role: "navigation"} 
-        .container
-          .navbar-header
-            %button.navbar-toggle{type: "button", 
-                                  "data-toggle" => "collapse",
-                                  "data-target" => ".navbar-collapse"}
-              %span.sr-only Toggle navigation
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-            = link_to "My Timestamps", root_path, class: "navbar-brand"
-          .collapse.navbar-collapse
+    .navbar.navbar-inverse.navbar-fixed-top{role: "navigation"} 
+      .container
+        .navbar-header
+          %button.navbar-toggle{type: "button", 
+                                "data-toggle" => "collapse",
+                                "data-target" => ".navbar-collapse"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          = link_to "My Timestamps", root_path, class: "navbar-brand"
+        .collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a{href: "#"} Home
+            %li
+              %a{href: "#"} Away
+          .navbar-right
             %ul.nav.navbar-nav
-              %li.active
-                %a{href: "#"} Home
+            - if user_signed_in?
               %li
-                %a{href: "#"} Away
-            .navbar-right
-              %ul.nav.navbar-nav
-              - if user_signed_in?
-                %li
-                  = link_to "Sign out", destroy_user_session_path, method: :delete
-              - else
-                %li
-                  = link_to "Sign in", new_user_session_path
+                = link_to "Sign out", destroy_user_session_path, method: :delete
+            - else
+              %li
+                = link_to "Sign in", new_user_session_path
 
+  .container    
+    .content
+      - if notice
+        %p.alert.alert-success
+          = notice
 
-    - if notice
-      %p.alert.alert-success
-        = notice
+      - if alert
+        %p.alert.alert-danger
+          = alert
 
-    - if alert
-      %p.alert.alert-danger
-        = alert
+      %h1 My Timestamps
 
-    %h1 My Timestamps
+      %div
+        - if !user_signed_in?
+          = link_to "Sign up", new_user_registration_path
 
-    %div
-      - if !user_signed_in?
-        = link_to "Sign up", new_user_registration_path
-
-    = yield
-    %p
-      = debug(params) if Rails.env.development? 
+      = yield
+      %p
+        = debug(params) if Rails.env.development? 
