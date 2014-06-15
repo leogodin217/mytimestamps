@@ -1,9 +1,13 @@
 
 %h3 Activities
-%ul.activities-list
-  - if @activities.any?
+
+- if @activities.any?
+  %tabe.activities-list
     - @activities.each do |activity|
-      %li{id: "activity#{activity.id}"}
-        = link_to activity.name, activity_path(activity.id)
-  - else
-    No activities
+      %tr{id: "activity#{activity.id}"}
+        %td 
+          = link_to activity.name, activity_path(activity.id)
+        %td
+          = activity.created_at
+- else
+  No activities

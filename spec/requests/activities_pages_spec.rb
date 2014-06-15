@@ -37,22 +37,50 @@ describe "Activities page" do
       end
 
       it "should show all activities" do
-        activities = user.activities.to_a
+        activities = user.activities
+
         activities.each do |activity|
-          expect(page).to have_selector("li", text: activity.name)
+          expect(page).to have_selector("tr#activity#{activity.id}>td", 
+                                         text: activity.name)
         end
       end
 
       it "should link to show activity" do
-        activities = user.activities.to_a
-        activities.each do |activity|
-          expect(page).to have_selector("li", text: activity.name)
-          expect(page).to have_selector("a[href='#{activity_path(activity.id)}']",
-                                           text: activity.name)
-        end
+        activities = user.activities
 
+        activities.each do |activity|
+          expect(page).to have_selector("a[href='#{activity_path(activity.id)}']",
+                                         text: activity.name)
+        end
       end
 
+      it "should show create timestamp" do
+        activities = user.activities
+
+        activities.each do |activity|
+          expect(page).to have_selector("tr#activity#{activity.id}>td", 
+                                         text: activity.created_at)
+        end
+      end
+    end
+
+    describe "creating activities" do
+      let(:activity) { FactoryGirl.build(:activity) }
+
+      before do
+        visit new_activity_path
+        fill_in "Name", with: activity.name
+      end
+
+
+      it "should create the activity" do
+        expect{click_button("Submit")}.to change{Activity.count}.by(1)  
+      end
+
+      it "should flash a success message" do
+        click_button "Submit"
+        expect(page).to have_content "Activity successfully created"
+      end
     end
 
   end

@@ -37,13 +37,17 @@
 
   .container    
     .content
-      - if notice
-        %p.alert.alert-success
-          = notice
+      - if flash[:notice]
+        %p.alert.alert-info
+          = flash[:notice]
 
-      - if alert
+      - if flash[:success]
+        %p.alert.alert-success
+          = flash[:success]
+
+      - if flash[:alert]
         %p.alert.alert-danger
-          = alert
+          = flash[:alert]
 
       %h1 My Timestamps
 
