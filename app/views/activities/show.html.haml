@@ -1,0 +1,7 @@
+.activity-show
+  %dl.dl-horizontal
+    %dt Name:
+    %dd= @activity.name
+    %dt Create time
+    %dd= @activity.created_at
+  = link_to "Edit", edit_activity_path(@activity)

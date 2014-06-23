@@ -1,0 +1,14 @@
+%fieldset
+  %legend Edit activity
+
+= form_for @activity do |f|
+  = render 'shared/form_error_messages', object: f.object
+  .form-group
+    = f.label      :name
+    = f.text_field :name
+  .form-group
+    = f.submit "Submit"
+
+= link_to "Delete", activity_path(@activity), method: :delete, 
+                                              data: {confirm: "You sure?"}, 
+                                              title: @activity.name

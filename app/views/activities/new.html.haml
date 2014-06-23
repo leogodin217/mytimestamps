@@ -2,6 +2,7 @@
   %legend New activity
 
 = form_for @activity do |f|
+  = render 'shared/form_error_messages', object: f.object
   .form-group
     = f.label      :name
     = f.text_field :name

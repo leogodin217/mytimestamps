@@ -4,6 +4,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'factory_girl_rails'
+# for using pluralize
+include ActionView::Helpers::TagHelper
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -48,4 +50,8 @@ RSpec.configure do |config|
   # User Warden for mocking devise logins
   config.include Warden::Test::Helpers
   Warden.test_mode!
+  # for using pluralize
+  config.include ActionView::Helpers::TextHelper
+  # For devise and controllers
+  config.include Devise::TestHelpers, type: :controller
 end

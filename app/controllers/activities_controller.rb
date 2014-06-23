@@ -9,8 +9,12 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
   end
 
+  def show
+    @activity = Activity.find(params[:id])
+  end
+
   def create
-    @activity = Activity.new(activity_attributes)
+    @activity = current_user.activities.new(activity_attributes)
 
     if @activity.save
       flash[:success] = "Activity successfully created."
@@ -20,9 +24,28 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def show
+  def edit
     @activity = Activity.find(params[:id])
   end
+
+  def update
+    @activity = current_user.activities.find(params[:id])
+
+    if @activity.update_attributes(activity_attributes)
+      flash[:success] = "Activity successfully updated."
+      redirect_to @activity
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @activity = current_user.activities.find(params[:id]) 
+    @activity.destroy
+    flash[:notice] = "Activity successfully deleted."
+    redirect_to activities_path
+  end
+
 
   private
 
